@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Latin Glossary</title>
+    </head>
+    <body>
+
+        <h1>Latin Glossary</h1>
+
+        <input type="text" id="input" />
+        <button disabled id="searchBtn" onclick="search()">Loading...</button>
+
+        <ul id="list">
+
+            
+
+        </ul>
+
+    </body>
+
+    <script>
+
+        let words = [];
+
+        fetch("https://raw.githubusercontent.com/aejester/LatinGlossary/main/glossary.txt").then((response) => response.text()).then((text) => {
+
+            words = text.split("\n")
+
+            words.forEach((item) => {
+
+                document.getElementById("list").innerHTML += "<li><b>"+item.split("=")[0]+"</b> - "+item.split("=")[1]+"</li>"
+
+            });
+
+            document.getElementById("searchBtn").disabled=false;
+            document.getElementById("searchBtn").innerHTML = "Search";
+
+        });
+
+        function search() {
+
+            document.getElementById("list").innerHTML = "";
+            document.getElementById("searchBtn").innerHTML = "Searching...";
+            document.getElementById("searchBtn").disabled=true;
+
+            let filtered = words.filter(function (str) { return str.includes(document.getElementById("input").value); });
+
+            document.getElementById("list").innerHTML = "";
+
+            filtered.forEach((item) => {
+
+                document.getElementById("list").innerHTML += "<li><b>"+item.split("=")[0]+"</b> - "+item.split("=")[1]+"</li>"
+
+            });
+
+            document.getElementById("searchBtn").disabled=false;
+            document.getElementById("searchBtn").innerHTML = "Search";
+
+        }
+
+        document.onkeydown = function(e) {
+
+            if (e.keyCode == 13) {
+
+                search();
+
+            }
+
+        }
+
+    </script>
+</html>
