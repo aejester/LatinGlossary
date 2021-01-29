@@ -43,7 +43,7 @@
             document.getElementById("searchBtn").innerHTML = "Searching...";
             document.getElementById("searchBtn").disabled=true;
 
-            let filtered = words.filter(function (str) { return str.includes(document.getElementById("input").value); });
+            let filtered = words.filter(function (str) { return str.includes(document.getElementById("input").value.toLowerCase()); });
 
             document.getElementById("list").innerHTML = "";
 
